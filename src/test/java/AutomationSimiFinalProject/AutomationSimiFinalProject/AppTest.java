@@ -35,7 +35,7 @@ public class AppTest {
 
 	@Test(priority = 1, enabled = false)
 	public void RadioButton() throws InterruptedException {
-		WebElement Radio1 = driver.findElement(By.cssSelector(".radioButton"));
+		WebElement Radio1 = driver.findElement(By.xpath("//input[@value='radio1']"));
 		WebElement Radio2 = driver.findElement(By.xpath("//input[@value='radio2']"));
 		WebElement Radio3 = driver.findElement(By.xpath("//input[@value='radio3']"));
 		Radio1.click();
@@ -52,8 +52,8 @@ public class AppTest {
 
 	}
 
-	@Test(priority = 2, enabled = false)
-	// This Test search between array of countries and seen if exist
+	@Test(priority = 2,enabled=false)
+//	This test searches through an array of countries to check if each one exists in the dropdown list.
 	public void DynamicDropDown() throws InterruptedException {
 
 		String[] countries = { "Jordan", "Japan" };
@@ -106,7 +106,7 @@ public class AppTest {
 		System.out.println(index);
 		AutoComplete.sendKeys(countries[index]);
 		Thread.sleep(1000);
-		AutoComplete.sendKeys(Keys.chord(Keys.ARROW_DOWN, Keys.ENTER));
+		AutoComplete.sendKeys(Keys.chord(Keys.ARROW_DOWN,Keys.ENTER));
 
 	}
 
@@ -125,13 +125,19 @@ public class AppTest {
 
 	@Test(priority = 6, enabled = false)
 	public void StaticList() {
-		WebElement dropdown = driver.findElement(By.id("dropdown-class-example"));
-		Select Myselect = new Select(dropdown);
+		
+		WebElement dropdown=driver.findElement(By.id("dropdown-class-example"));
+		Select option=new Select(dropdown);
+		option.selectByIndex(1);
+		WebElement option1 = driver.findElement(By.xpath("//option[@value='option1']"));
 //		Myselect.selectByVisibleText("Appium");
-//		Myselect.selectByIndex(1);
-		Myselect.selectByValue("option3");
-		System.out.println(dropdown.findElements(By.tagName("option")).get(1).getText());
-
+//		Myselect.selectByValue("option3");
+		List<WebElement>options=dropdown.findElements(By.tagName("option"));
+		for(WebElement Oneoption:options) {
+			System.out.println(Oneoption.getText());
+		}
+		Assert.assertTrue(option1.isSelected(), "Option1 is not selected");
+	
 	}
 
 	@Test(priority = 7, enabled = false)
@@ -161,30 +167,16 @@ public class AppTest {
 		Assert.assertTrue(Checkboxbutton3.isSelected(), "The Checkboxbutton3 does not select");
 	}
 
-	@Test(priority = 9, enabled = false)
-	// This Test for Select CheckBox Button based on his name
-	public void SelectSecondButtonOfCheckbox() {
-		List<WebElement> options = driver.findElements(By.xpath("//input[@type='checkbox']"));
-
-		for (WebElement option : options) {
-			String value = option.getAttribute("value");
-			if (value.equalsIgnoreCase("option2")) {
-				option.click();
-				Assert.assertFalse(option.isSelected(), "Option2 checkbox should not be selected");
-				break;
-			}
-		}
-	}
-
-	@Test(priority = 10, enabled = false)
+	
+	@Test(priority = 9)
 	public void OpenNewWindow() throws InterruptedException {
 
 		WebElement WindowButton = driver.findElement(By.id("openwindow"));
 
 		WindowButton.click();
-
-		Set<String> SwitchWindow = driver.getWindowHandles();
-		List<String> WidowsList = new ArrayList<>(SwitchWindow);
+		
+		Set<String>SwitchWindow=driver.getWindowHandles();
+		List<String>WidowsList=new ArrayList<>(SwitchWindow);
 		driver.switchTo().window(WidowsList.get(1));
 		Thread.sleep(1000);
 		System.out.println(driver.getTitle());
@@ -194,7 +186,7 @@ public class AppTest {
 
 	}
 
-	@Test(priority = 11, enabled = false)
+	@Test(priority = 10, enabled = false)
 	public void OpenNewTab() throws InterruptedException {
 
 		WebElement TabButton = driver.findElement(By.id("opentab"));
@@ -212,7 +204,7 @@ public class AppTest {
 
 	}
 
-	@Test(priority = 12, enabled = false)
+	@Test(priority = 11, enabled = false)
 	public void AlertTest() throws InterruptedException {
 
 		WebElement AlertButton = driver.findElement(By.id("name"));
@@ -224,7 +216,7 @@ public class AppTest {
 
 	}
 
-	@Test(priority = 13, enabled = false)
+	@Test(priority = 12, enabled = false)
 	public void ConfirmTest() throws InterruptedException {
 
 		WebElement InputFieldForName = driver.findElement(By.id("name"));
@@ -236,7 +228,7 @@ public class AppTest {
 
 	}
 
-	@Test(priority = 14, enabled = false)
+	@Test(priority = 13, enabled = false)
 	public void PrintTableData() {
 
 		WebElement Table = driver.findElement(By.id("product"));
@@ -247,7 +239,7 @@ public class AppTest {
 
 	}
 
-	@Test(priority = 15, enabled = false)
+	@Test(priority = 14, enabled = false)
 	public void printTableData() {
 
 		WebElement Table = driver.findElement(By.id("product"));
@@ -262,7 +254,7 @@ public class AppTest {
 
 	}
 
-	@Test(priority = 16, enabled = false)
+	@Test(priority = 15, enabled = false)
 	public void PrintPriceFromTable() {
 
 		WebElement Table = driver.findElement(By.id("product"));
@@ -274,7 +266,7 @@ public class AppTest {
 
 	}
 
-	@Test(priority = 17, enabled = false)
+	@Test(priority = 16, enabled = false)
 	public void ElementDisplayedTest() throws InterruptedException {
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -291,7 +283,7 @@ public class AppTest {
 
 	}
 
-	@Test(priority = 18, enabled = false)
+	@Test(priority = 17, enabled = false)
 	public void EnableDisableTest() throws InterruptedException {
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -309,7 +301,7 @@ public class AppTest {
 
 	}
 
-	@Test(priority = 19, enabled = false)
+	@Test(priority = 18, enabled = false)
 	public void MouseHovering() {
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -327,19 +319,19 @@ public class AppTest {
 
 	}
 
-	@Test(priority = 20,enabled=false)
-	public void BokingCalenderNewTapTest() throws InterruptedException  {
+	@Test(priority = 19, enabled = false)
+	public void BokingCalenderNewTapTest() throws InterruptedException {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0,2000)");
 		Thread.sleep(2000);
-		WebElement BookingButton =driver.findElement(By.linkText("Booking Calendar"));
+		WebElement BookingButton = driver.findElement(By.linkText("Booking Calendar"));
 		BookingButton.click();
 		Set<String> handel = driver.getWindowHandles();
 		List<String> SwitchTap = new ArrayList(handel);
 		driver.switchTo().window(SwitchTap.get(1));
 		Thread.sleep(2000);
-		
-		WebElement calender =driver.findElement(By.cssSelector(".datepick.wpbc_calendar"));
+
+		WebElement calender = driver.findElement(By.cssSelector(".datepick.wpbc_calendar"));
 
 		List<WebElement> TableOfDays = driver.findElements(By.tagName("td"));
 		for (int i = 0; i < TableOfDays.size(); i++) {
@@ -349,23 +341,24 @@ public class AppTest {
 		}
 
 	}
-	@Test(priority = 21)
-	public void IframeTest() throws InterruptedException  {
+
+	@Test(priority = 20, enabled = false)
+	public void IframeTest() throws InterruptedException {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0,2200)");
 		Thread.sleep(2000);
 		driver.switchTo().frame("iframe-name");
-		
-		WebElement BurgerMenu =driver.findElement(By.cssSelector(".ct-mobile-meta-item.btn-nav-mobile.open-menu"));
+
+		WebElement BurgerMenu = driver.findElement(By.cssSelector(".ct-mobile-meta-item.btn-nav-mobile.open-menu"));
 		BurgerMenu.click();
-		Set<String>Handels=driver.getWindowHandles();
-		List<String>Switch=new ArrayList (Handels);
+		Set<String> Handels = driver.getWindowHandles();
+		List<String> Switch = new ArrayList(Handels);
 		driver.switchTo().window(Switch.get(0));
 		Thread.sleep(2000);
-		WebElement BookingButton =driver.findElement(By.linkText("Booking Calendar"));
+		WebElement BookingButton = driver.findElement(By.linkText("Booking Calendar"));
 		BookingButton.click();
-		Set<String>Handels2=driver.getWindowHandles();
-		List<String>Switch2=new ArrayList (Handels2);
+		Set<String> Handels2 = driver.getWindowHandles();
+		List<String> Switch2 = new ArrayList(Handels2);
 		driver.switchTo().window(Switch2.get(1));
 		System.out.println(driver.getTitle());
 
